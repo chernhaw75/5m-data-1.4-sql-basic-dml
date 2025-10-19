@@ -14,6 +14,11 @@ Select the minimum and maximum price per sqm of all the flats.
 
 ```sql
 
+select  
+round (max (resale_price/floor_area_sqm),2) as maximum_price,     
+round(min (resale_price/floor_area_sqm),2) as minimum_price
+from resale_flat_prices_2017
+
 ```
 
 ### Question 2
@@ -21,6 +26,14 @@ Select the minimum and maximum price per sqm of all the flats.
 Select the average price per sqm for flats in each town.
 
 ```sql
+SELECT 
+  town,
+  round (AVG(resale_price)/avg(floor_area_sqm),2) AS avg_price_sqm
+FROM 
+  resale_flat_prices_2017
+GROUP BY 
+  town;
+
 
 ```
 
@@ -34,6 +47,13 @@ Categorize flats into price ranges and count how many flats fall into each categ
   Show the counts in descending order.
 
 ```sql
+SELECT
+  COUNT(CASE WHEN resale_price < 400000 THEN 1 END) AS Budget,
+  COUNT(CASE WHEN resale_price BETWEEN 400000 AND 700000 THEN 1 END) AS Midrange,
+  COUNT(CASE WHEN resale_price > 700000 THEN 1 END) AS Premium
+FROM
+  resale_flat_prices_2017 dsc
+
 
 ```
 
@@ -42,6 +62,14 @@ Categorize flats into price ranges and count how many flats fall into each categ
 Count the number of flats sold in each town during the first quarter of 2017 (January to March).
 
 ```sql
+SELECT
+ town,  COUNT(*) AS Sold,
+  
+FROM
+  resale_flat_prices_2017 
+GROUP BY 
+  town;
+
 
 ```
 
